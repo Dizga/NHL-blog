@@ -13,7 +13,7 @@ Pour commencer, il faut installer les bibliothèques requises en exécutant
     pip install -r requirement
   ``` 
 
-La classe NHLDataDownloader dans le fichier load.py permet de télécharger les données d'une année donnée. Pour ce faire, on fait une instanciation de cette classe et on la donne comme paramétre l'année cible.
+La classe NHLDataDownloader dans le fichier load.py permet de télécharger les données d'une année donnée. Pour ce faire, on doit faire une instanciation de cette classe et on la donne comme paramétre l'année cible.
 
 Il faut donc faire l'importation du fichier contenant cette classe.
 ```bash
@@ -117,12 +117,13 @@ L'illustration ci-dessous présente un extrait du dataframe final, offrant ainsi
 ![Dataframe](/assets/images/df.png)
 
 ### Question 2 
+Afin d'améliorer l'analyse des matchs hockey, on peut ajouter des informations sur la force réelle (comme 5 contre 4, 5 contre 3) aux tirs et aux buts. On peut citer quelques approches possibles:
 
-1. Suivi de l'état du match : Créer un système de suivi en temps réel pour enregistrer le nombre de joueurs sur la glace pour chaque équipe. Ces données seraient associées à chaque tir ou but. Par exemple, en cas d'avantage numérique, l'état du match passerait à 5 contre 4, et cette information serait liée à tous les événements pendant cet avantage.
+1. Suivi de l'état du match : Créer un système de suivi en temps réel pour enregistrer le nombre de joueurs sur la glace pour chaque équipe. Ces données seront associées à chaque tir ou but. Par exemple, en cas d'avantage numérique, l'état du match passera à 5 contre 4, une telle information sera liée à tous les événements durant cet avantage.
 
 2. Utilisation des pénalités : Les données sur les pénalités font généralement partie des données de match de hockey. En utilisant les heures de début et de fin des pénalités, on pourrait déterminer l'état du match pendant ces périodes. Lorsqu'une pénalité est en cours, l'état du match serait ajusté pour refléter le changement de force des équipes (par exemple, 5 contre 4 pour l'équipe en supériorité numérique). Cela dépend de la précision des données sur les pénalités.
 
-3. Terminologie standardisée : Créer une terminologie standard pour différents états du match, comme "5v5," "5v4," "4v5," serait essentiel. Assurer une utilisation cohérente de cette terminologie lors de la collecte de données.
+3. Terminologie standardisée : Créer une terminologie standard pour différents états du match, comme "5v5," "5v4," "4v5,". Assurer une utilisation cohérente de cette terminologie lors de la collecte de données.
 
 
 ### Question 3
@@ -139,19 +140,32 @@ Nous envisageons d'explorer trois aspects de l'évaluation des tirs : la classif
 
 ###  Question 1
 Le Tip-In est le type de tir le plus dangereux en termes de conversion en buts parmi les types de tirs analysés. En effet, en 2018, 17.16% des tirs de type Tip-In sont des buts. En revanche, le Wrist Shot est le type de tir le plus dangereux en termes de nombre total de buts. On remarque également que Wrist Shot est également le type de tir le plus courant.
-Le choix du graphique à barres est expliqué pour plusieurs raisons. Il permet une comparaison directe des types de tirs en superposant les barres de buts sur celles des tirs, mettant ainsi en lumière la proportion de buts par rapport aux tirs. Cette visualisation claire facilite l'identification des tendances et la mise en évidence des types de tirs les plus courants et les plus dangereux.
-De plus, l'utilisation d'une échelle logarithmique pour l'axe des ordonnées permet de visualiser efficacement des valeurs très différentes entre les types de tirs. En résumé, le graphique à barres empilées offre une perspective claire et concise pour analyser les données sur les tirs et les buts.
+
+Le choix du graphique à barres est expliqué pour plusieurs raisons. Tout d'abord, il permet une comparaison directe des types de tirs en superposant les barres de buts sur celles des tirs, mettant ainsi en lumière la proportion de buts par rapport aux tirs. Cette visualisation facilite l'identification des tendances et la mise en évidence des types de tirs les plus courants et les plus dangereux.
+De plus, l'utilisation d'une échelle logarithmique pour l'axe des ordonnées permet de visualiser efficacement des valeurs très différentes entre les types de tirs.
+
+En résumé, le graphique à barres empilées offre une perspective claire et concise pour analyser les données sur les tirs et les buts.
 
 ![Shots types](/assets/images/2018.png)
 
 ### Question 2
-Il n’y a pas eu de changements remarquables au cours des trois dernières saisons. En effet, pour les trois saisons, le tir le plus dangereux et le plus courant, c’est “Wrist Shot”. L’ordre des autres trois restent constants au cours de trois ans (dans l’ordre décroissant de dangerosité: Slap Shot, Snap Shot, Backhand, Tip-In, Deflected, Wrap-around).
+Plus la rondelle est proche au filet (la distance est minimale), plus la probabilité d'avoir un but augmente. Cette relation entre la distance à laquelle un tir a été effectué et la chance qu'il s'agisse d'un but n'a pas eu de changement remarquables d'une saison à une autre.  
+
+![](/assets/images/2018_dist.png)
+![](/assets/images/2019_dist.png)
+![](/assets/images/2020_dist.png)
+
+
 ### Question 3 
+![](/assets/images/5.3.png)
+Cette figure montre le pourcentage de buts en fonction de la distance par rapport au filet et de la catégorie de types de tirs pendant la saison 2018. Il est observé que le type de tir "Deflected" est le plus dangereux. En effet, pour toutes les plages de distances, les chances de marquer un but avec ce type de tir sont relativement élevées.
+Les deux types de tir slap shot et snap shot s'avèrent etre dangereux aussi à des intervalles de distance faibles. 
+
 
 ## Visualisations avancées
 
 ### Question 1 
-Ces figures illustrent les 4 graphiques au zone offensive de la saison 2016/2017 jusqu'à la saison 2020/2021
+Ces figures illustrent les 4 graphiques au zone offensive de la saison 2016/2017 jusqu'à la saison 2020/2021.
 {% include 20162017.html %}
 
 {% include 20172018.html %}
@@ -162,15 +176,23 @@ Ces figures illustrent les 4 graphiques au zone offensive de la saison 2016/2017
 
 {% include 20202021.html %}
 
-
-
-
-
-
-
 ### Question 2 
+Dans les quatres saisons, on remarque que le cœur de territoire de l’adversaire est souvent en bleu, c’est à dire que aucun tir est presque fait à partir de cette zone. En fait, Les tirs sont souvent fait des côtés de terrains. Cette observation semble logique puisque en réalité, la densité des joueurs en cette partie de terrain est élevé.
 
 
 ### Question 3
+La carte des tirs de l'Avalanche du Colorado au cours de la saison 2016-17 révèle une performance offensive limitée. La plupart des tirs ont été effectués depuis des positions éloignées du filet, ce qui indique des difficultés à percer les défenses adverses. Cette performance s'est reflétée dans un mauvais classement. En fait, l’équipe a terminé la saison régulière à la 30e et dernière place de la ligue, ce qui signifie qu’elle n’a pas réussi à se qualifier pour les séries éliminatoires.
+
+À l’inverse, la carte des tirs pour la saison 2020-21 indique un style de jeu plus agressif et offensif de la part de l’Avalanche du Colorado. L'équipe a réussi à réaliser des tirs depuis de nombreuses positions proches du filet, démontrant ainsi sa capacité à contrôler le jeu et à pénétrer les défenses adverses. Ces performances ont permis à l’équipe de s’assurer la première place du championnat. 
 
 ### Question 4 
+
+Les styles de jeu de ces deux équipes sont clairement différents. La distribution de tirs du Lightning de Tampa Bay souligne son approche offensive agressive. Ils ont excellé dans l’exercice de la pression sur l’équipe adverse, en maintenant le contrôle territorial et en faisant des tris proches du filet. En revanche, la carte des tirs des Sabres de Buffalo suggère un style de jeu plus passif et moins efficace. La majorité de leurs tirs sont lancés depuis les côtés de la patinoire, souvent loin du filet adverse. Cette différence notable dans l’agressivité offensive et la domination est un facteur clé contribuant aux vastes disparités dans leurs classements respectifs.
+
+Cependant, il est crucial de reconnaître que si les cartes de tir ne fournissent qu'une vue partielle de la performance globale d'une équipe. Pour comprendre globalement les succès ou les difficultés d'une équipe de la LNH, divers facteurs supplémentaires doivent être pris en compte :
+
+1. Compétence et profondeur des joueurs : Le talent et la profondeur de l'effectif d'une équipe sont essentiels au succès.
+
+2. Force de l'adversaire : La qualité des équipes auxquelles ils font face joue un rôle important.
+
+3. Blessures des joueurs : les blessures des joueurs clés peuvent affecter considérablement les performances. Surveiller la santé des joueurs vedettes est essentiel.
