@@ -41,73 +41,151 @@ Une fois le téléchargement terminé, les données seront enregistrées dans un
 L'exemple de code ci-dessous implémente la fonctionnalité d'un outil de débogage interactif qui permet de parcourir tous les événements pour chaque match d'une saison spécifique.
 
 ```python
+rink_image = Image.open("figures/nhl_rink.png")
 
-Create a function to update the Plotly scatter plot based on the selected game
- game = season.regulars[game_idx]
-    df = game.to_df()
-    match_title = f'{game.home_team.name} VS {game.away_team.name}'
+pp = pprint.PrettyPrinter(indent=4)
 
-    fig = px.scatter(df, x="x", y="y", animation_frame="event idx", range_x=[-100,100], range_y=[-42.5,42.5])
+data = season_data
 
-    fig.update_traces(mode='markers',
-                             marker_size=15,
-                             marker_color="#111111")
+# Dropdown to select 'regulars' or 'playoffs'
+type_dropdown = widgets.Dropdown(options=['regulars', 'playoffs'],
+                                 description='Type:')
 
-    fig.add_layout_image(
-      source="https://raw.githubusercontent.com/udem-ift6758/project-template/main/figures/nhl_rink.png",
-      xref="x",
-      yref="y",
-      x=-100,
-      y=42.5,
-      sizex=200,
-      sizey=85,
-      sizing="stretch",
-      opacity=0.9,
-      layer="below"
-    )
-    fig.update_xaxes(showline=False, zeroline=False, showgrid=False, range=[-100, 100])
-    fig.update_yaxes(
-        showline=False,
-        zeroline=False,
-        showgrid=False,
-        range=[-42.5, 42.5],
-        scaleanchor = "x",
-        scaleratio = 1,
-      )
+# Slider to switch between different games
+game_slider = widgets.IntSlider(value=0,
+                                min=0,
+                                max= len(data['regulars']) - 1,
+                                description='Game Index:')
 
-    fig.update_layout(
-      title={
-            'text': match_title,
-            'y':0.9,
-            'x':0.5,
-            'xanchor': 'center',
-            'yanchor': 'top'},
-      autosize=False,
-      template="plotly_white",)
+# Slider to switch between different plays
+play_slider = widgets.IntSlider(value=0,
+                                min=0,
+                                max=len(data[
+                                    'regulars'][0][
+                                        'liveData'][
+                                            'plays'][
+                                                'allPlays']) - 1,
+                                description='Play Index:')
 
-    fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["duration"] = 2000
-    fig.layout.updatemenus[0].buttons[0].args[1]["frame"]["redraw"] = True
+# Output widget to display the plot
+plot_output = widgets.Output()
 
-    for id, fr in enumerate(fig.frames):
-      fr.layout.title = df.loc[id]['description']
+def update_game_slider_range(*args):
+    """Update the game slider range based on the type selected."""
+    test = {"test":"regulars"}
+    if type_dropdown.value == 'regulars':
+        game_slider.max = len(data['regulars']) - 1
+    else:
+        game_slider.max = len(data['playoffs']) - 1
+type_dropdown.observe(update_game_slider_range, 'value')
 
-    for step in fig.layout.sliders[0].steps:
-        step["args"][1]["frame"]["redraw"] = True
+def update_play_slider_range(*args):
+    """Update the play slider range based on game_slider's value."""
+    if type_dropdown.value == 'regulars':
+        coords_length = len(data[
+            'regulars'][
+                game_slider.value][
+                    'liveData'][
+                        'plays'][
+                            'allPlays']) - 1
+    else:
+        key = list(data['playoffs'].keys())[game_slider.value]
+        coords_length = len(data[
+            'playoffs'][
+                key][
+                    'liveData'][
+                        'plays'][
+                            'allPlays']) - 1
+    
+    play_slider.max = coords_length - 1
+game_slider.observe(update_play_slider_range, 'value')
 
-    fig.show()
+def plot_coordinates(change):
+    """Plot the coordinates based on the selected options."""
+    with plot_output:
+        plot_output.clear_output(wait=True)
 
+        if type_dropdown.value == 'regulars':
+            game = data['regulars'][game_slider.value]
 
-Create a dropdown widget to select the match
-match_dropdown = widgets.Dropdown(options=range(len(season.regulars)), description="Select Match:")
+        else:
+            key = list(data['playoffs'].keys())[game_slider.value]
+            game = data['playoffs'][key]
 
-Create an interactive output that displays the plot
-interactive_output = widgets.interactive_output(update_plot, {'game_idx': match_dropdown})
+        play = game[
+            'liveData'][
+                'plays'][
+                    'allPlays'][
+                        play_slider.value]
+        coords = play['coordinates']
+        teams = game['liveData']['linescore']['teams']
 
-Display the widgets
-widgets.VBox([match_dropdown, interactive_output])
+        home = teams["home"]["team"]["triCode"]
+        home_score = teams["home"]["goals"]
+        away = teams["away"]["team"]["triCode"]
+        away_score = teams["away"]["goals"]
+
+        print(f'{home} {home_score} goals vs {away} {away_score} goals')
+        pp.pprint(play)
+
+        if len(coords) == 0:
+          coords = {'x':None, 'y':None}
+
+        fig = go.Figure()
+
+        fig.add_trace(go.Scatter(x= [coords['x']], y=[coords['y']],
+                                mode='markers',
+                                marker_size=15,
+                                marker_color="#111111"))
+
+        # Add images
+        fig.add_layout_image(
+                dict(
+                    source=rink_image,
+                    xref="x",
+                    yref="y",
+                    x=-100,
+                    y=42.5,
+                    sizex=200,
+                    sizey=85,
+                    sizing="stretch",
+                    opacity=0.9,
+                    layer="below")
+        )
+
+        fig.update_xaxes(
+            showline=False,
+            zeroline=False,
+            showgrid=False,
+            range=[-100, 100])
+        fig.update_yaxes(
+            showline=False,
+            zeroline=False,
+            showgrid=False,
+            range=[-42.5, 42.5],
+            scaleanchor = "x",
+            scaleratio = 1,
+          )
+
+        fig.update_layout(
+            autosize=False,
+            template="plotly_white")
+
+        fig.show()
+
+# Watch for changes
+type_dropdown.observe(plot_coordinates, 'value')
+game_slider.observe(plot_coordinates, 'value')
+play_slider.observe(plot_coordinates, 'value')
+
+# Initial plot
+plot_coordinates(None)
+
+# Display widgets
+display(type_dropdown, game_slider, play_slider, plot_output)
 ```
 Cette figure représente des événements au cours d'un match de hockey. Les données sont affichées sous forme de nuage de points animé, où chaque point correspond à un événement particulier d'un match choisi. Les événements sont disposés en fonction de leurs coordonnées x et y, et l'animation permet de suivre l'évolution de ces événements au fil du temps en se basant sur l'indice de l'événement.
-![Interactive hockey match](/assets/images/interactive.png)
+![Interactive hockey match](/assets/images/debug_tool.png)
 Cette figure illustre le suivi des événements pour un match donné de manière interactive. 
 {% include plotly_demo_3.html %}
 
