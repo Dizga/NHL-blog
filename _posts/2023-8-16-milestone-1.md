@@ -228,20 +228,26 @@ De plus, l'utilisation d'une échelle logarithmique pour l'axe des ordonnées pe
 
 En résumé, le graphique à barres offre une perspective claire et concise pour analyser les données sur les tirs et les buts.
 
-![Shots types](/assets/images/2018.png)
+<!-- ![Shots types](/assets/images/2018.png) -->
+{% include type-shot-2018.html %}
 
 ### Question 2
-Plus la rondelle est proche au filet (la distance est minimale), plus la probabilité d'avoir un but augmente. Cette relation entre la distance à laquelle un tir a été effectué et la chance qu'il s'agisse d'un but n'a pas eu de changement remarquables d'une saison à une autre.  
+Plus la rondelle est proche au filet (la distance est minimale), plus la probabilité d'avoir un but augmente. Cette relation reste la même pour toutes les saisons observées. On peut tout de même remarquer que les tirs très lointain on de bonnes chances de réussite, cela pourrait peut-être s'expliquer par le fait que le gardien adverse n'était pas dans ses filets (empty net).
+<!-- Cette relation entre la distance à laquelle un tir a été effectué et la chance qu'il s'agisse d'un but n'a pas eu de changement remarquables d'une saison à une autre. -->
 
-![](/assets/images/2018_dist.png)
-![](/assets/images/2019_dist.png)
-![](/assets/images/2020_dist.png)
+
+![](/assets/images/shot-distance-2018.png)
+![](/assets/images/shot-distance-2019.png)
+![](/assets/images/shot-distance-2020.png)
 
 
 ### Question 3 
-![](/assets/images/5.3.png)
-Cette figure montre le pourcentage de buts en fonction de la distance par rapport au filet et de la catégorie de types de tirs pendant la saison 2018. Il est observé que le type de tir "Deflected" est le plus dangereux. En effet, pour toutes les plages de distances, les chances de marquer un but avec ce type de tir sont relativement élevées.
-Les deux types de tir slap shot et snap shot s'avèrent être  dangereux aussi à des intervalles de distance faibles. 
+<!-- ![](/assets/images/5.3.png) -->
+{% include type-shot-distance-2020.html %}
+Cette figure montre le pourcentage de buts en fonction de la distance par rapport au filet et de la catégorie de types de tirs pendant la saison 2020. Le slap shot semble être le tir le plus dangereux. On peut tout de même remarqué la dangerosité des types Deflected et Tip-in qui, malgré la distance garde de bonne chance de réussite.
+
+<!-- Il est observé que le type de tir "Deflected" est le plus dangereux. En effet, pour toutes les plages de distances, les chances de marquer un but avec ce type de tir sont relativement élevées.
+Les deux types de tir slap shot et snap shot s'avèrent être  dangereux aussi à des intervalles de distance faibles.  -->
 
 
 ## Visualisations avancées
