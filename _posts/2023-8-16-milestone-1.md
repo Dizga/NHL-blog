@@ -265,7 +265,8 @@ Ces figures illustrent les  graphiques au zone offensive de la saison 2016/2017 
 {% include 20202021.html %}
 
 ### Question 2 
-Dans les quatre saisons, on remarque que le cœur de territoire de l’adversaire est souvent en bleu, c'est-à-dire qu'aucun tir est presque fait à partir de cette zone. En fait, Les tirs sont souvent fait des côtés de terrains. Cette observation semble logique puisque en réalité, la densité des joueurs en cette partie de terrain est élevé.
+Ces graphiques permette de voir si une équipe fais plus ou moins de tires d'un endroit donné par rapport à une équipe moyenne de la NHL au cours de la même saison. Les régions dans lesquelles une équipe génère plus de tirs que la moyenne sont indiquées en rouge et les régions dans lesquelles une équipe génère moins de tirs que la moyenne sont indiquées en bleu.
+Dans les cinq saisons, on remarque que le cœur de territoire de l’adversaire est souvent en bleu, c'est-à-dire qu'aucun tir est presque fait à partir de cette zone. En fait, Les tirs sont souvent fait des côtés de terrains. Cette observation semble logique puisque en réalité, la densité des joueurs en cette partie de terrain est élevé.
 
 
 ### Question 3
@@ -279,10 +280,12 @@ Les styles de jeu de ces deux équipes sont clairement différents. La distribut
 
 La plupart de leurs tirs sont effectués depuis les côtés de la patinoire, souvent en dehors du filet adverse. La présence de cette nette différence dans l'agressivité offensive et la domination joue un rôle majeur dans les écarts considérables de leurs classements respectifs.
 
-Cependant, il est essentiel de reconnaître que si les cartes de tir ne donnent qu'une vision partielle de la performance globale d'une équipe. Pour une compréhension globale des succès ou des difficultés d'une équipe de la LNH, il est essentiel de prendre en compte d'autres facteurs supplémentaires : :
+Cependant, il est essentiel de reconnaître que ces graphiques de tir ne donnent qu'une vision partielle de la performance globale d'une équipe. Pour une compréhension globale des succès ou des difficultés d'une équipe de la LNH, il est essentiel de prendre en compte d'autres facteurs comme par exemple:
 
 1. Compétence et profondeur des joueurs : Le talent et la profondeur de l'effectif d'une équipe sont essentiels au succès.
 
 2. Force de l'adversaire : La qualité des équipes auxquelles ils font face joue un rôle important.
 
 3. Blessures des joueurs : les blessures des joueurs clés peuvent affecter considérablement les performances. Surveiller la santé des joueurs vedettes est essentiel.
+
+4. Ratio Goal/Tirs : Ces graphiques ne nous donne pas d'information sur la réussite des tirs, une équipe pourrait techniquement faire moins de tirs mais plus de goals.
