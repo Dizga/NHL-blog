@@ -1,0 +1,22 @@
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<video id="video" controls="true"></video>
+<script>
+  if(Hls.isSupported()) {
+    var video = document.getElementById('video');
+    var hls = new Hls();
+    hls.loadSource('https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/5234966/cea33600-8f9f-4922-ad6f-90a15f2c7151_HLS/game.m3u8');
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+      video.play();
+  });
+ }
+ // hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
+ // When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
+ // This is using the built-in support of the plain video element, without using hls.js.
+  else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+    video.src = 'https://hlslive-wsczoominwestus.med.nhl.com/publish-hls/5234966/cea33600-8f9f-4922-ad6f-90a15f2c7151_HLS/game.m3u8';
+    video.addEventListener('canplay',function() {
+      video.play();
+    });
+  }
+</script>
