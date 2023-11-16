@@ -3,6 +3,12 @@
     display: block;
 }
 
+.comet {
+    margin: auto;
+    display: block;
+    margin-bottom: 2.5rem;
+}
+
 h2 {
     margin-top: 5rem;
 }
